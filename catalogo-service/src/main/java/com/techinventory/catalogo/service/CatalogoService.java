@@ -1,0 +1,48 @@
+package com.techinventory.catalogo.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.techinventory.catalogo.entity.Producto;
+import com.techinventory.catalogo.repository.ProductoRepository;
+
+@Service
+public class CatalogoService {
+
+    public record ItemReserva(Long productoId, Integer cantidad) {}
+
+    private final ProductoRepository productoRepository;
+
+    public CatalogoService(ProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
+
+    public List<Producto> listarProductos() {
+        return productoRepository.findAll();
+    }
+
+    public Producto obtenerPorId(Long id) {
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con el ID: " + id));
+    }
+
+    @Transactional
+    public void reservar(List<ItemReserva> items) {
+        if (items == null || items.isEmpty()) {
+            throw new IllegalArgumentException("La reserva no tiene productos");
+        }
+        for (ItemReserva item : items) {
+            if (item.cantidad() == null || item.cantidad() <= 0) {
+                throw new IllegalArgumentException("Cantidad inválida");
+            }
+            Producto producto = obtenerPorId(item.productoId());
+            if (producto.getStock() < item.cantidad()) {
+                throw new IllegalArgumentException("Stock insuficiente para " + producto.getNombre());
+            }
+            producto.setStock(producto.getStock() - item.cantidad());
+            productoRepository.save(producto);
+        }
+    }
+}
