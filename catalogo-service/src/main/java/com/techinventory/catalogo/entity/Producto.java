@@ -7,17 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "productos")
-@Getter
-@Setter
-@NoArgsConstructor
-@Builder
 public class Producto {
 
     @Id
@@ -44,6 +36,9 @@ public class Producto {
     @Column(name = "url_imagen", length = 1000)
     private String urlImagen;
 
+    public Producto() {
+    }
+
     public Producto(Long id, String sku, String nombre, String categoria, BigDecimal precio, Integer stock, String codigoBarras, String ubicacionBodega, String urlImagen) {
         this.id = id;
         this.sku = sku;
@@ -55,4 +50,31 @@ public class Producto {
         this.ubicacionBodega = ubicacionBodega;
         this.urlImagen = urlImagen;
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getSku() { return sku; }
+    public void setSku(String sku) { this.sku = sku; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
+
+    public BigDecimal getPrecio() { return precio; }
+    public void setPrecio(BigDecimal precio) { this.precio = precio; }
+
+    public Integer getStock() { return stock; }
+    public void setStock(Integer stock) { this.stock = stock; }
+
+    public String getCodigoBarras() { return codigoBarras; }
+    public void setCodigoBarras(String codigoBarras) { this.codigoBarras = codigoBarras; }
+
+    public String getUbicacionBodega() { return ubicacionBodega; }
+    public void setUbicacionBodega(String ubicacionBodega) { this.ubicacionBodega = ubicacionBodega; }
+
+    public String getUrlImagen() { return urlImagen; }
+    public void setUrlImagen(String urlImagen) { this.urlImagen = urlImagen; }
 }

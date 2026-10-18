@@ -1,10 +1,12 @@
 package com.techinventory.inventario.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.techinventory.inventario.dto.ProductoEvent;
 import com.techinventory.inventario.entity.MovimientoInventario;
 import com.techinventory.inventario.entity.Producto;
 import com.techinventory.inventario.repository.MovimientoInventarioRepository;
@@ -32,6 +34,35 @@ public class InventarioService {
 
     @Transactional
     public Producto guardarProducto(Producto producto) {
+        return productoRepository.save(producto);
+    }
+
+    @Transactional
+    public Producto inicializarDesdeEvento(ProductoEvent event) {
+        if (event == null || event.getNombre() == null || event.getNombre().isBlank()) {
+            throw new IllegalArgumentException("El evento recibido no contiene un nombre de producto válido");
+        }
+        if (event.getId() == null) {
+            throw new IllegalArgumentException("El evento recibido no contiene el id del producto");
+        }
+
+        Producto producto = productoRepository.findById(event.getId()).orElseGet(Producto::new);
+        producto.setId(event.getId());
+        producto.setNombre(event.getNombre());
+        producto.setCategoria(event.getCategoria());
+        
+        if (event.getPrecio() != null) {
+            producto.setPrecio(event.getPrecio());
+        } else {
+            producto.setPrecio(BigDecimal.ZERO);
+        }
+
+        if (event.getStockInicial() != null) {
+            producto.setStock(event.getStockInicial());
+        } else {
+            producto.setStock(0);
+        }
+
         return productoRepository.save(producto);
     }
 

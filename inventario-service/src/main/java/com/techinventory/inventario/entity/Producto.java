@@ -7,13 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "productos")
-@NoArgsConstructor
-@Builder
 public class Producto {
 
     @Id
@@ -40,6 +36,11 @@ public class Producto {
     @Column(name = "url_imagen", length = 1000)
     private String urlImagen;
 
+    // Constructor vacío por defecto exigido por JPA
+    public Producto() {
+    }
+
+    // Constructor con todos los campos
     public Producto(Long id, String sku, String nombre, String categoria, BigDecimal precio, Integer stock, String codigoBarras, String ubicacionBodega, String urlImagen) {
         this.id = id;
         this.sku = sku;
@@ -52,6 +53,7 @@ public class Producto {
         this.urlImagen = urlImagen;
     }
 
+    // Getters y Setters tradicionales
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

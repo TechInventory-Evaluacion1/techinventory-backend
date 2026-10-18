@@ -44,6 +44,11 @@ public class ProductoController {
         return ResponseEntity.ok(catalogoService.listarProductos());
     }
 
+    @PostMapping
+    public ResponseEntity<Producto> crear(@RequestBody Producto producto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(catalogoService.crearProducto(producto));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Producto> detalle(@PathVariable Long id) {
         return ResponseEntity.ok(catalogoService.obtenerPorId(id));
