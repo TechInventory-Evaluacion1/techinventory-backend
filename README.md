@@ -18,6 +18,15 @@ Integraciones HTTP sugeridas:
 
 ## Cómo levantar en local
 
+Levantar docker
+docker compose up -d
+
+## Contenedor mysql para docker
+docker run --name mysql-local -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=techinventory -d mysql:8.0
+
+## Crear base de datos con docker
+docker run --name mysql-tech -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=techinventory -d mysql:8.0
+
 ```bash
 cd catalogo-service && ./mvnw spring-boot:run
 cd inventario-service && ./mvnw spring-boot:run
