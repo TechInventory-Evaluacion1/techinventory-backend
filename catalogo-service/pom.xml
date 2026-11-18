@@ -36,6 +36,12 @@
 			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 
+		<!-- Dependencia de Spring Boot Kafka (Evaluacion 3) -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
 		<!-- Dependencia para Jackson JSON (Conversion de mensajes) -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
